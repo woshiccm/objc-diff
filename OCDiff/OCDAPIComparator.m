@@ -66,8 +66,8 @@
         if (cursor.isImplicit || [_convertedProperties containsObject:USR])
             continue;
 
-        NSString *relativePath = [cursor.location.path ocd_stringWithPathRelativeToDirectory:_oldBaseDirectory];
-        OCDifference *difference = [OCDifference differenceWithType:OCDifferenceTypeRemoval name:[self displayNameForCursor:cursor] path:relativePath lineNumber:cursor.location.lineNumber USR:cursor.USR];
+//        NSString *relativePath = [cursor.location.path ocd_stringWithPathRelativeToDirectory:_oldBaseDirectory];
+        OCDifference *difference = [OCDifference differenceWithType:OCDifferenceTypeRemoval name:[self displayNameForCursor:cursor] path:cursor.location.path lineNumber:cursor.location.lineNumber columnNumber:cursor.location.columnNumber USR:cursor.USR];
         [differences addObject:difference];
     }
 
@@ -77,7 +77,7 @@
             continue;
 
         NSString *relativePath = [cursor.location.path ocd_stringWithPathRelativeToDirectory:_newBaseDirectory];
-        OCDifference *difference = [OCDifference differenceWithType:OCDifferenceTypeAddition name:[self displayNameForCursor:cursor] path:relativePath lineNumber:cursor.location.lineNumber USR:cursor.USR];
+        OCDifference *difference = [OCDifference differenceWithType:OCDifferenceTypeAddition name:[self displayNameForCursor:cursor] path:relativePath lineNumber:cursor.location.lineNumber columnNumber:cursor.location.columnNumber USR:cursor.USR];
         [differences addObject:difference];
     }
 
@@ -447,6 +447,7 @@
         difference = [OCDifference modificationDifferenceWithName:[self displayNameForCursor:oldCursor]
                                                              path:relativePath
                                                        lineNumber:newCursor.location.lineNumber
+                                                     columnNumber:newCursor.location.columnNumber
                                                               USR:newUSR
                                                     modifications:modifications];
         [differences addObject:difference];
